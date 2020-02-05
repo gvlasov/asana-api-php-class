@@ -487,6 +487,27 @@ class Asana
     }
 
     /**
+     * Adds a rich text comment to a task.
+     * The comment will be authored by the authorized user, and timestamped when the server receives the request.
+     *
+     * @see https://developers.asana.com/docs/#rich-text
+     * @param string $taskId
+     * @param string $richText
+     * @return string JSON or null
+     */
+    public function richCommentOnTask($taskId, $richText = '')
+    {
+        $data = array(
+            'data' => array(
+                'html_text' => $richText
+            )
+        );
+        $data = json_encode($data);
+
+        return $this->askAsana($this->tasksUrl . '/' . $taskId . '/stories', $data, ASANA_METHOD_POST);
+    }
+
+    /**
      * Adds a tag to a task. If successful, will return success and an empty data block.
      *
      * @param string $taskId
